@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Post - Social Feed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="/" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-xl font-semibold text-white">Update Post</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-lg mx-auto py-8 px-4">
+        <!-- Update Post Card -->
+        <div class="bg-gray-800 rounded-lg shadow-sm border border-gray-700">
+            <div class="p-4">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-edit text-white text-sm"></i>
+                    </div>
+                    <span class="text-gray-300 font-medium">Edit your post</span>
+                </div>
+                
+                <form action="/update/<%= post._id %>" method="post" class="space-y-4">
+                    <textarea 
+                        name="content" 
+                        placeholder="Share your thoughts..."
+                        class="w-full p-3 bg-gray-700 border border-gray-600 text-gray-300 placeholder-gray-400 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        rows="4"
+                    ><%= post.content %></textarea>
+                    <div class="flex justify-between">
+                        <a 
+                            href="/" 
+                            class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                        >
+                            Cancel
+                        </a>
+                        <button 
+                            type="submit"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                        >
+                            Update Post
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
