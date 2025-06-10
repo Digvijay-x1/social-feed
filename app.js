@@ -7,27 +7,17 @@ const  jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const user = require('./models/user');
 const crypto = require('crypto');
-const multer = require('multer')
+const upload = require('./config/multerconfig')
 const path = require('path')
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/images/uploads')
-  },
-  filename: function (req, file, cb) {
-    crypto.randomBytes(12,(err,bytes)=>{
-        const fn = bytes.toString('hex') + path.extname(file.originalname)
-        cb(null, fn)
-    })
-    
-  }
-})
 
-const upload = multer({ storage: storage })
+app.use(express.static(path.join(__dirname,'/public')))
+
+
 
 
 app.set('view engine', 'ejs');
@@ -141,8 +131,15 @@ app.post('/update/:id', async (req,res)=>{
     res.redirect('/profile')
 })
 
-app.post('/upload',upload.single('image'),(req,res)=>{
+app.get('/upload',(req,res)=>{
     res.render('upload');
+})
+
+app.post('/upload' , isLoggedIn , upload.single('image') , async (req,res)=>{
+    let user = await userModal.findOne({email: req.user.email})
+    user.profileimg = req.file.filename
+    await user.save()
+    res.redirect('/profile');
 })
 
 
